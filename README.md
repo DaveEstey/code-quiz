@@ -6,13 +6,14 @@ This project was used to better skills with creating and using elements in Javas
 # Installation
 N/A
 
-Usage
+# Usage
+By clicking the start button, you will answer questions right or wrong until the end where you will put your name in to be saved.
 https://daveestey.github.io/code-quiz/
 https://github.com/DaveEstey/code-quiz/
 
 
-Credits
+# Credits
 Me
 
-License
+# License
 N/A
