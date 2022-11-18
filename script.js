@@ -1,14 +1,36 @@
 
-var question = {
-    qTitle: ["which number is the smallest", "Which number is the largest", "which number is the coolest", "So why does it skip one?", "answer is A"],
-    options: [[1, 2, 3, 4], [2, 3, 4, 5], [4, 6, 7, 8], [7, 9, 9, 10], ["a", "b", "c", "d"]],
-    correctanswer: [1, 5, 7, 10, "d"],
-
-};  
+var question = [
+    {
+        title: "which number is the smallest",
+        options: [1, 2, 3, 4],
+        correctAnswer: 1
+    },
+    {
+        title: "Which number is the largest",
+        options: [2, 3, 4, 5],
+        correctAnswer: 5
+    },
+    {
+        title: "5",
+        options: [2, 3, 4, 5],
+        correctAnswer: 5
+    },
+    {
+        title: "3",
+        options: [2, 3, 4, 5],
+        correctAnswer: 3
+    },
+    {
+        title: "2",
+        options: [2, 3, 4, 5],
+        correctAnswer: 2
+    }
+];
 var wrong = 0;
 var right = 0;
 var currQuestion = 0;
-var testLength = question.qTitle.length;
+var currentQuestion = question[currQuestion];
+var testLength = question.length;
 var score = document.getElementById("right");
 score.innerHTML = "test score";
 var startbtn = document.getElementById("startbtn")
@@ -25,27 +47,42 @@ function startGame() {
 function showQuestion() {
 
     console.log("current", currQuestion);
-    
-    var title = document.getElementById("title");
-    title.textContent = question.qTitle[currQuestion];
 
-    var options = document.querySelectorAll(".options");
-    for (var i = 0; i < options.length; i++) {
-        options[i].innerHTML = question.options[currQuestion][i];
-        console.log("options I",options[i].innerHTML);
-        selectChoice(options[i]);
+    var currentQuestion = question[currQuestion];
+    var title = document.getElementById("title");
+    var options = document.querySelector(".options");
+     if (currQuestion < (testLength -1)){
+            title.textContent = currentQuestion.title;
+        } else{
+            options.innerHTML = "";
+            title.textContent = ("Submit your Intials");
+        }
+
+
+   
+        options.innerHTML = "";
+    for (var i = 0; i < currentQuestion.options.length; i++) { //creating the buttons
+        var optionsNode = document.createElement('button');
+        optionsNode.textContent = currentQuestion.options[i];
+        options.append(optionsNode);
+        options.selectChoice(options)
+    
     }
+   
+
 }
 
-function selectChoice(element) {
+function hideQuestion(){
 
-  
-    var score = document.getElementById("right");
-    
-    element.addEventListener("click", function (event) {
-        event.stopPropagation();
-        event.preventDefault();
-        if (element.innerHTML == (question.correctanswer[currQuestion])) {
+}
+
+
+ function selectChoice(o) {
+
+   
+        o.addEventListener("click", function (element) {
+
+        if (element.textContent == (currentQuestion.correctAnswer)) {
             console.log("right");
             right++;
 
@@ -53,32 +90,40 @@ function selectChoice(element) {
             console.log("wrong");
             wrong++;
         }
-        if (currQuestion < 4) {
+
+        if (currQuestion < (testLength - 1)) {
 
             currQuestion++;
             console.log("cur", currQuestion);
-            showQuestion();
 
 
         } else {
             console.log("end of test");
         }
         score.innerHTML = ("Right: " + right + " Wrong: " + wrong);
+        optionsNode.innerHTML = "";
+        updateQuestion();
     });
 
+}
+function updateQuestion(){
+    for (var i = 0; i < currentQuestion.options.length; i++) { 
+        optionsNode.innerHTML = "";
+        optionsNode[i].textContent = currentQuestion.options[i];
+}
 }
 
 function countdown() {
     var timer = document.getElementById("timer");
     var minute = 5;
     var sec = 5;
-    setInterval(function () {
+    var timeleft = setInterval(function () {
         timer.innerHTML = minute + " : " + sec;
         sec--;
         if (minute < 0) {
-            clearInterval(timer);
+            clearInterval(timeleft);
             timer.innerHTML = ("Out of time!")
-            endGame();
+            //endGame();
         }
         else if (sec < 0) {
             minute--;
