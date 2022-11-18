@@ -11,19 +11,19 @@ var question = [
         correctAnswer: 5
     },
     {
-        title: "5",
+        title: "Pick number 9",
         options: [8, 7, 6, 9],
         correctAnswer: 9
     },
     {
-        title: "3",
+        title: "Comes before all except 1",
         options: [2, 3, 4, 5],
         correctAnswer: 3
     },
     {
-        title: "2",
-        options: [2, 3, 4, 5],
-        correctAnswer: 2
+        title: "Is the loneliest number",
+        options: [1, 3, 4, 5],
+        correctAnswer: 2 
     }
 ];
 var wrong = 0;
@@ -38,7 +38,7 @@ var startbtn = document.getElementById("startbtn")
 
 function startQuiz() {
     startbtn.addEventListener("click", function () {
-        //countdown();
+        countdown();
         showQuestion();
         startbtn.remove();
     });
@@ -230,16 +230,18 @@ function endQuiz(){
     var scoreCardEnd = ("Right: " + right + " Wrong: " + wrong + "Time left " + (timeleft));
     scoreCard.innerHTML = scoreCardEnd;
     submitbtn.innerHTML = "SUBMIT";
-    var storePerson = {
-        person,
-        scoreCard
-    }
+   
     options.appendChild(person)
     options.appendChild(scoreCard)
     options.appendChild(submitbtn)
     
-    
+    var stPerson = document.querySelector("input").value;
     submitbtn.addEventListener("submit", function() {
+     
+    var storePerson = {
+        person: stPerson,
+        scoreCard: scoreCard
+    }
     localStorage.setItem(storePerson);
     var storedPerson = localStorage.getItem(storePerson);
     options.innerHTML = "";
@@ -247,22 +249,22 @@ function endQuiz(){
 });
 }
 
-/* function countdown() {
+function countdown() {
     var timer = document.getElementById("timer");
-    var minute = 5;
-    var sec = 5;
+    var minute = 2;
+    var sec = 1;
         timeleft = setInterval(function () {
         timer.innerHTML = minute + " : " + sec;
         sec--;
         if (minute < 0) {
             clearInterval(timeleft)
             timer.innerHTML = ("Out of time!")
-            //endGame();
+            endQuiz();
         }
         else if (sec < 0) {
             minute--;
             sec = 59;
         }
-    }, 1000,);
-} */
+    }, 1000);
+}
 startQuiz();
