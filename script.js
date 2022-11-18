@@ -50,24 +50,26 @@ function showQuestion() {
 
     var currentQuestion = question[currQuestion];
     var title = document.getElementById("title");
-    var options = document.querySelector(".options");
-     if (currQuestion < (testLength -1)){
+    var options = document.querySelectorAll(".options");
+     if (currQuestion < (testLength - 1)){
             title.textContent = currentQuestion.title;
         } else{
             options.innerHTML = "";
             title.textContent = ("Submit your Intials");
         }
-
-
-   
-        options.innerHTML = "";
     for (var i = 0; i < currentQuestion.options.length; i++) { //creating the buttons
         var optionsNode = document.createElement('button');
         optionsNode.textContent = currentQuestion.options[i];
-        options.append(optionsNode);
-        options.selectChoice(options)
+        options[i].append(optionsNode);
     
     }
+    
+    optionsNode.addEventListener("click", function(){
+        for (var i = 0; i < currentQuestion.options.length; i++){
+            options.textContent = currentQuestion.options[i];
+        }
+        
+    });
    
 
 }
@@ -77,10 +79,10 @@ function hideQuestion(){
 }
 
 
- function selectChoice(o) {
+ function selectChoice(options) {
 
    
-        o.addEventListener("click", function (element) {
+        optionsNode.addEventListener("click", function (element) {
 
         if (element.textContent == (currentQuestion.correctAnswer)) {
             console.log("right");
@@ -132,4 +134,3 @@ function countdown() {
     }, 1000,);
 }
 startGame();
-
