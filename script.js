@@ -12,8 +12,8 @@ var question = [
     },
     {
         title: "5",
-        options: [2, 3, 4, 5],
-        correctAnswer: 5
+        options: [8, 7, 6, 9],
+        correctAnswer: 9
     },
     {
         title: "3",
@@ -28,6 +28,7 @@ var question = [
 ];
 var wrong = 0;
 var right = 0;
+var timeleft = 0;
 var currQuestion = 0;
 var currentQuestion = question[currQuestion];
 var testLength = question.length;
@@ -35,10 +36,10 @@ var score = document.getElementById("right");
 score.innerHTML = "test score";
 var startbtn = document.getElementById("startbtn")
 
-function startGame() {
+function startQuiz() {
     startbtn.addEventListener("click", function () {
+        //countdown();
         showQuestion();
-        countdown();
         startbtn.remove();
     });
 
@@ -48,7 +49,6 @@ function showQuestion() {
 
     console.log("current", currQuestion);
 
-    var currentQuestion = question[currQuestion];
     var title = document.querySelector("#title");
     var options = document.querySelector("#options");
     if (currQuestion < (testLength - 1)) {
@@ -59,15 +59,19 @@ function showQuestion() {
     }
     for (var i = 0; i < currentQuestion.options.length; i++) { //creating the buttons
         var optionsNode = document.createElement('button');
-        optionsNode.setAttribute("class", ("btn"+[i]))
-        optionsNode.textContent = currentQuestion.options[i];
+        optionsNode.setAttribute("id", ("btn" + i))
+        optionsNode.innerHTML = currentQuestion.options[i];
 
         options.appendChild(optionsNode);
 
     }
-        var btn1 = document.querySelectorAll(".btn1");
-        btn1.addEventListener("click", function (element) {   //changing the buttons to the next question
-        if (element.innerHTML === currentQuestion.correctAnswer) {
+    var btn0 = document.querySelector("#btn0");
+    var btn1 = document.querySelector("#btn1");
+    var btn2 = document.querySelector("#btn2");
+    var btn3 = document.querySelector("#btn3");
+    btn0.addEventListener("click", function () {   //changing the buttons to the next question
+
+        if (btn0.innerHTML == question[currQuestion]['correctAnswer']) {
             console.log("right");
             right++;
 
@@ -79,19 +83,99 @@ function showQuestion() {
         if (currQuestion < (testLength - 1)) {
             console.log("cur", currQuestion);
         } else {
-            console.log("end of test");
-        } 
+            console.log("end of Quiz");
+            endQuiz();
+        }
         currQuestion++;
-        console.log("in click ev");
+        currentQuestion = question[currQuestion];
+        title.textContent = currentQuestion.title;
+        console.log("in click ev ", currentQuestion);
         for (var i = 0; i < currentQuestion.options.length; i++) {
-            optionsNode[i].textContent = currentQuestion.options[i];
+            options.childNodes[i].innerHTML = currentQuestion["options"][i];
+        }
+        score.innerHTML = ("Right: " + right + " Wrong: " + wrong);
+    });
+    btn1.addEventListener("click", function () {   //changing the buttons to the next question
+
+        if (btn1.innerHTML == question[currQuestion]['correctAnswer']) {
+            console.log("right");
+            right++;
+
+        } else {
+            console.log("wrong");
+            wrong++;
+        }
+
+        if (currQuestion < (testLength - 1)) {
+            console.log("cur", currQuestion);
+        } else {
+            console.log("end of Quiz");
+            endQuiz();
+        }
+        currQuestion++;
+        currentQuestion = question[currQuestion];
+        title.textContent = currentQuestion.title;
+        console.log("in click ev ", currentQuestion);
+        for (var i = 0; i < currentQuestion.options.length; i++) {
+            options.childNodes[i].innerHTML = currentQuestion["options"][i];
+        }
+        score.innerHTML = ("Right: " + right + " Wrong: " + wrong);
+    });
+    btn2.addEventListener("click", function () {   //changing the buttons to the next question
+
+        if (btn2.innerHTML == question[currQuestion]['correctAnswer']) {
+            console.log("right");
+            right++;
+
+        } else {
+            console.log("wrong");
+            wrong++;
+        }
+
+        if (currQuestion < (testLength - 1)) {
+            console.log("cur", currQuestion);
+        } else {
+            console.log("end of Quiz");
+            endQuiz();
+        }
+        currQuestion++;
+        currentQuestion = question[currQuestion];
+        title.textContent = currentQuestion.title;
+        console.log("in click ev ", currentQuestion);
+        for (var i = 0; i < currentQuestion.options.length; i++) {
+            options.childNodes[i].innerHTML = currentQuestion["options"][i];
+        }
+        score.innerHTML = ("Right: " + right + " Wrong: " + wrong);
+    });
+    btn3.addEventListener("click", function () {   //changing the buttons to the next question
+
+        if (btn3.innerHTML == question[currQuestion]['correctAnswer']) {
+            console.log("right");
+            right++;
+
+        } else {
+            console.log("wrong");
+            wrong++;
+        }
+
+        if (currQuestion < (testLength - 1)) {
+            console.log("cur", currQuestion);
+        } else {
+            console.log("end of Quiz");
+            endQuiz();
+        }
+        currQuestion++;
+        currentQuestion = question[currQuestion];
+        title.textContent = currentQuestion.title;
+        console.log("in click ev ", currentQuestion);
+        for (var i = 0; i < currentQuestion.options.length; i++) {
+            options.childNodes[i].innerHTML = currentQuestion["options"][i];
         }
 
 
         score.innerHTML = ("Right: " + right + " Wrong: " + wrong);
-        allOptions.innerHTML = "";
-    });
 
+    });
 }
 
 /* function hideQuestion(){
@@ -129,22 +213,49 @@ function showQuestion() {
  });
 
 } */
-function updateQuestion() {
-    for (var i = 0; i < currentQuestion.options.length; i++) {
-        optionsNode[i].innerHTML = "";
-        optionsNode[i].textContent = currentQuestion.options[i];
+/* function updateQuestion() {
+                    for (var i = 0; i < currentQuestion.options.length; i++) {
+                        optionsNode[i].innerHTML = "";
+                        optionsNode[i].textContent = currentQuestion.options[i];
+                    }
+                } */
+
+function endQuiz(){
+    options.innerHTML = "";
+    score.innerHTML = "";
+   
+    var person = document.createElement("input");
+    var submitbtn = document.createElement("button") 
+    var scoreCard = document.createElement("p")
+    var scoreCardEnd = ("Right: " + right + " Wrong: " + wrong + "Time left " + (timeleft));
+    scoreCard.innerHTML = scoreCardEnd;
+    submitbtn.innerHTML = "SUBMIT";
+    var storePerson = {
+        person,
+        scoreCard
     }
+    options.appendChild(person)
+    options.appendChild(scoreCard)
+    options.appendChild(submitbtn)
+    
+    
+    submitbtn.addEventListener("submit", function() {
+    localStorage.setItem(storePerson);
+    var storedPerson = localStorage.getItem(storePerson);
+    options.innerHTML = "";
+    options.innerHTML = storedPerson;
+});
 }
 
-function countdown() {
+/* function countdown() {
     var timer = document.getElementById("timer");
     var minute = 5;
     var sec = 5;
-    var timeleft = setInterval(function () {
+        timeleft = setInterval(function () {
         timer.innerHTML = minute + " : " + sec;
         sec--;
         if (minute < 0) {
-            clearInterval(timeleft);
+            clearInterval(timeleft)
             timer.innerHTML = ("Out of time!")
             //endGame();
         }
@@ -153,5 +264,5 @@ function countdown() {
             sec = 59;
         }
     }, 1000,);
-}
-startGame();
+} */
+startQuiz();
