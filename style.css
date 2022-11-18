@@ -22,16 +22,7 @@ h1{
     padding-bottom: 20px;
 }
 
-li{
-    padding: 20px;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
+div{
+    min-height: 100px;
 }
-
-h2{
-    font-size: larger;
-}
-
 

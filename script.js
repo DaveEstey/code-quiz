@@ -37,9 +37,9 @@ var startbtn = document.getElementById("startbtn")
 
 function startGame() {
     startbtn.addEventListener("click", function () {
-        startbtn.remove();
         showQuestion();
         countdown();
+        startbtn.remove();
     });
 
 }
@@ -49,42 +49,25 @@ function showQuestion() {
     console.log("current", currQuestion);
 
     var currentQuestion = question[currQuestion];
-    var title = document.getElementById("title");
-    var options = document.querySelectorAll(".options");
-     if (currQuestion < (testLength - 1)){
-            title.textContent = currentQuestion.title;
-        } else{
-            options.innerHTML = "";
-            title.textContent = ("Submit your Intials");
-        }
+    var title = document.querySelector("#title");
+    var options = document.querySelector("#options");
+    if (currQuestion < (testLength - 1)) {
+        title.textContent = currentQuestion.title;
+    } else {
+        options.innerHTML = "";
+        title.textContent = ("Submit your Intials");
+    }
     for (var i = 0; i < currentQuestion.options.length; i++) { //creating the buttons
         var optionsNode = document.createElement('button');
+        optionsNode.setAttribute("class", ("btn"+[i]))
         optionsNode.textContent = currentQuestion.options[i];
-        options[i].append(optionsNode);
-    
+
+        options.appendChild(optionsNode);
+
     }
-    
-    optionsNode.addEventListener("click", function(){
-        for (var i = 0; i < currentQuestion.options.length; i++){
-            options.textContent = currentQuestion.options[i];
-        }
-        
-    });
-   
-
-}
-
-function hideQuestion(){
-
-}
-
-
- function selectChoice(options) {
-
-   
-        optionsNode.addEventListener("click", function (element) {
-
-        if (element.textContent == (currentQuestion.correctAnswer)) {
+        var btn1 = document.querySelectorAll(".btn1");
+        btn1.addEventListener("click", function (element) {   //changing the buttons to the next question
+        if (element.innerHTML === currentQuestion.correctAnswer) {
             console.log("right");
             right++;
 
@@ -94,25 +77,63 @@ function hideQuestion(){
         }
 
         if (currQuestion < (testLength - 1)) {
-
-            currQuestion++;
             console.log("cur", currQuestion);
-
-
         } else {
             console.log("end of test");
+        } 
+        currQuestion++;
+        console.log("in click ev");
+        for (var i = 0; i < currentQuestion.options.length; i++) {
+            optionsNode[i].textContent = currentQuestion.options[i];
         }
+
+
         score.innerHTML = ("Right: " + right + " Wrong: " + wrong);
-        optionsNode.innerHTML = "";
-        updateQuestion();
+        allOptions.innerHTML = "";
     });
 
 }
-function updateQuestion(){
-    for (var i = 0; i < currentQuestion.options.length; i++) { 
-        optionsNode.innerHTML = "";
+
+/* function hideQuestion(){
+
+} */
+
+
+/* function selectChoice(changeObj) {
+
+
+
+    changeObj.addEventListener("click", function (element) {   //changing the buttons to the next question
+        currQuestion++;
+        console.log("in click ev");
+        for (var i = 0; i < currentQuestion.options.length; i++) {
+            optionsNode[i].textContent = currentQuestion.options[i];
+        }
+   
+    if (element.innerHTML === (currentQuestion.correctAnswer)) {
+        console.log("right");
+        right++;
+
+    } else {
+        console.log("wrong");
+        wrong++;
+    }
+
+    if (currQuestion < (testLength - 1)) {
+        console.log("cur", currQuestion);
+    } else {
+        console.log("end of test");
+    }
+    score.innerHTML = ("Right: " + right + " Wrong: " + wrong);
+    optionsNode.innerHTML = "";
+ });
+
+} */
+function updateQuestion() {
+    for (var i = 0; i < currentQuestion.options.length; i++) {
+        optionsNode[i].innerHTML = "";
         optionsNode[i].textContent = currentQuestion.options[i];
-}
+    }
 }
 
 function countdown() {
