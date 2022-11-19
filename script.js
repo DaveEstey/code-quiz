@@ -23,7 +23,7 @@ var question = [
     {
         title: "Is the loneliest number",
         options: [1, 3, 4, 5],
-        correctAnswer: 2 
+        correctAnswer: 2
     }
 ];
 var wrong = 0;
@@ -220,40 +220,49 @@ function showQuestion() {
                     }
                 } */
 
-function endQuiz(){
+function endQuiz() {
     options.innerHTML = "";
     score.innerHTML = "";
-   
+    
+
     var person = document.createElement("input");
-    var submitbtn = document.createElement("button") 
+    var submitbtn = document.createElement("button")
     var scoreCard = document.createElement("p")
     var scoreCardEnd = ("Right: " + right + " Wrong: " + wrong + "Time left " + (timeleft));
     scoreCard.innerHTML = scoreCardEnd;
     submitbtn.innerHTML = "SUBMIT";
-   
+
     options.appendChild(person)
     options.appendChild(scoreCard)
     options.appendChild(submitbtn)
-    
-    var stPerson = document.querySelector("input").value;
-    submitbtn.addEventListener("submit", function() {
-     
-    var storePerson = {
-        person: stPerson,
-        scoreCard: scoreCard
-    }
-    localStorage.setItem(storePerson);
-    var storedPerson = localStorage.getItem(storePerson);
-    options.innerHTML = "";
-    options.innerHTML = storedPerson;
-});
+
+
+    var submitbtn1 = document.querySelector("button");
+    submitbtn1.addEventListener("click", function (event) {
+        event.preventDefault();
+        var stPerson = document.querySelector("input").value;
+        var storePerson = {
+            person: stPerson,
+            scoreCard: scoreCard
+        }
+        storePerson = JSON.stringify(storePerson);
+        localStorage.setItem("person", storePerson);
+        var storedPerson = localStorage.getItem("person");
+        storedPerson = JSON.parse(storedPerson);
+        options.innerHTML = "";
+        options.innerHTML = ((storedPerson.person)+ "scored" + (scoreCard));
+
+    });
+
+
 }
+
 
 function countdown() {
     var timer = document.getElementById("timer");
     var minute = 2;
     var sec = 1;
-        timeleft = setInterval(function () {
+    timeleft = setInterval(function () {
         timer.innerHTML = minute + " : " + sec;
         sec--;
         if (minute < 0) {

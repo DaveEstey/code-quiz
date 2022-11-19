@@ -26,3 +26,7 @@ div{
     min-height: 100px;
 }
 
+button{
+ padding: 15px;
+ min-block-size: 50px;
+}   
