@@ -23,12 +23,15 @@ var question = [
     {
         title: "Is the loneliest number",
         options: [1, 3, 4, 5],
-        correctAnswer: 2
+        correctAnswer: 1
     }
 ];
 var wrong = 0;
 var right = 0;
-var timeleft = 0;
+var minute = 1;
+var sec = 30;
+var timer = document.getElementById("timer");
+var timeLeft = 0;
 var currQuestion = 0;
 var currentQuestion = question[currQuestion];
 var testLength = question.length;
@@ -65,11 +68,11 @@ function showQuestion() {
         options.appendChild(optionsNode);
 
     }
-    var btn0 = document.querySelector("#btn0");
+    var btn0 = document.querySelector("#btn0"); // Can use forEach function, but onl figured out that after I couldnt get it to work and did it this way
     var btn1 = document.querySelector("#btn1");
     var btn2 = document.querySelector("#btn2");
     var btn3 = document.querySelector("#btn3");
-    btn0.addEventListener("click", function () {   //changing the buttons to the next question
+    btn0.addEventListener("click", function () {   // Changing the buttons to the next question
 
         if (btn0.innerHTML == question[currQuestion]['correctAnswer']) {
             console.log("right");
@@ -82,18 +85,20 @@ function showQuestion() {
 
         if (currQuestion < (testLength - 1)) {
             console.log("cur", currQuestion);
-        } else {
-            console.log("end of Quiz");
-            endQuiz();
-        }
-        currQuestion++;
-        currentQuestion = question[currQuestion];
-        title.textContent = currentQuestion.title;
-        console.log("in click ev ", currentQuestion);
+            currQuestion++;
+            currentQuestion = question[currQuestion];
+            title.textContent = currentQuestion.title;
+            score.innerHTML = ("Right: " + right + " Wrong: " + wrong);
+            console.log("in click ev ", currentQuestion);
         for (var i = 0; i < currentQuestion.options.length; i++) {
             options.childNodes[i].innerHTML = currentQuestion["options"][i];
         }
-        score.innerHTML = ("Right: " + right + " Wrong: " + wrong);
+        } else {
+            console.log("end of Quiz");
+            title.textContent = "Enter your Initials";
+            endQuiz();
+        }
+
     });
     btn1.addEventListener("click", function () {   //changing the buttons to the next question
 
@@ -108,18 +113,21 @@ function showQuestion() {
 
         if (currQuestion < (testLength - 1)) {
             console.log("cur", currQuestion);
-        } else {
-            console.log("end of Quiz");
-            endQuiz();
-        }
-        currQuestion++;
-        currentQuestion = question[currQuestion];
-        title.textContent = currentQuestion.title;
-        console.log("in click ev ", currentQuestion);
+            currQuestion++;
+            currentQuestion = question[currQuestion];
+            title.textContent = currentQuestion.title;
+            score.innerHTML = ("Right: " + right + " Wrong: " + wrong);
+            console.log("in click ev ", currentQuestion);
         for (var i = 0; i < currentQuestion.options.length; i++) {
             options.childNodes[i].innerHTML = currentQuestion["options"][i];
         }
-        score.innerHTML = ("Right: " + right + " Wrong: " + wrong);
+        } else {
+            console.log("end of Quiz");
+            title.textContent = "Enter your Initials";
+            endQuiz();
+        }
+      
+
     });
     btn2.addEventListener("click", function () {   //changing the buttons to the next question
 
@@ -134,18 +142,20 @@ function showQuestion() {
 
         if (currQuestion < (testLength - 1)) {
             console.log("cur", currQuestion);
-        } else {
-            console.log("end of Quiz");
-            endQuiz();
-        }
-        currQuestion++;
-        currentQuestion = question[currQuestion];
-        title.textContent = currentQuestion.title;
-        console.log("in click ev ", currentQuestion);
+            currQuestion++;
+            currentQuestion = question[currQuestion];
+            title.textContent = currentQuestion.title;
+            score.innerHTML = ("Right: " + right + " Wrong: " + wrong);
+            console.log("in click ev ", currentQuestion);
         for (var i = 0; i < currentQuestion.options.length; i++) {
             options.childNodes[i].innerHTML = currentQuestion["options"][i];
         }
-        score.innerHTML = ("Right: " + right + " Wrong: " + wrong);
+        }else {
+            console.log("end of Quiz");
+            title.textContent = "Enter your Initials";
+            endQuiz();
+        }
+   
     });
     btn3.addEventListener("click", function () {   //changing the buttons to the next question
 
@@ -160,20 +170,24 @@ function showQuestion() {
 
         if (currQuestion < (testLength - 1)) {
             console.log("cur", currQuestion);
-        } else {
-            console.log("end of Quiz");
-            endQuiz();
-        }
-        currQuestion++;
-        currentQuestion = question[currQuestion];
-        title.textContent = currentQuestion.title;
-        console.log("in click ev ", currentQuestion);
+            currQuestion++;
+            currentQuestion = question[currQuestion];
+            title.textContent = currentQuestion.title;
+            console.log("in click ev ", currentQuestion);
+            score.innerHTML = ("Right: " + right + " Wrong: " + wrong);
         for (var i = 0; i < currentQuestion.options.length; i++) {
             options.childNodes[i].innerHTML = currentQuestion["options"][i];
         }
+        } else {
+            console.log("end of Quiz");
+            title.textContent = "Enter your Initials";
+            endQuiz();
+        }
+       
+      
 
 
-        score.innerHTML = ("Right: " + right + " Wrong: " + wrong);
+
 
     });
 }
@@ -223,12 +237,12 @@ function showQuestion() {
 function endQuiz() {
     options.innerHTML = "";
     score.innerHTML = "";
-    
-
+    timer.innerHTML = "";
+    timeLeft = (sec + (minute*60))
     var person = document.createElement("input");
     var submitbtn = document.createElement("button")
     var scoreCard = document.createElement("p")
-    var scoreCardEnd = ("Right: " + right + " Wrong: " + wrong + "Time left " + (timeleft));
+    var scoreCardEnd = ("Right: " + right + " Wrong: " + wrong + " and had a time left of: " + timeLeft + "seconds");
     scoreCard.innerHTML = scoreCardEnd;
     submitbtn.innerHTML = "SUBMIT";
 
@@ -243,14 +257,14 @@ function endQuiz() {
         var stPerson = document.querySelector("input").value;
         var storePerson = {
             person: stPerson,
-            scoreCard: scoreCard
+            scoreCard: scoreCardEnd
         }
         storePerson = JSON.stringify(storePerson);
         localStorage.setItem("person", storePerson);
         var storedPerson = localStorage.getItem("person");
         storedPerson = JSON.parse(storedPerson);
         options.innerHTML = "";
-        options.innerHTML = ((storedPerson.person)+ "scored" + (scoreCard));
+        options.innerHTML = ((storedPerson.person)+ " scored " + (storedPerson.scoreCard));
 
     });
 
@@ -259,20 +273,23 @@ function endQuiz() {
 
 
 function countdown() {
-    var timer = document.getElementById("timer");
-    var minute = 2;
-    var sec = 1;
-    timeleft = setInterval(function () {
-        timer.innerHTML = minute + " : " + sec;
+    
+    var cTimeLeft = setInterval(function () {
+    if (currQuestion < (testLength - 1)){
+    timer.innerHTML = minute + " : " + sec;
+    }else{
+        clearInterval(cTimeLeft); 
+    }
         sec--;
-        if (minute < 0) {
-            clearInterval(timeleft)
+        if (minute < 0 ) {
+            clearInterval(cTimeLeft)
             timer.innerHTML = ("Out of time!")
             endQuiz();
         }
         else if (sec < 0) {
             minute--;
             sec = 59;
+
         }
     }, 1000);
 }
